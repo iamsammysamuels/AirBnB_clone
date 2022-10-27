@@ -10,6 +10,9 @@ Created by:
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -17,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb)"
     intro = "*** Welcome to Airbnb console clone ***"
-    classes = ["BaseModel"]
+    classes = ["BaseModel", "User", "Place", "Review"]
 
     def do_quit(self, line):
         """Quit command to exit the program"""
