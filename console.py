@@ -7,12 +7,12 @@ Created by:
 """
 
 
-import cmd
 from models.base_model import BaseModel
-from models import storage
-from models.user import User
 from models.place import Place
 from models.review import Review
+from models.user import User
+import models
+import cmd
 
 
 class HBNBCommand(cmd.Cmd):
@@ -84,6 +84,19 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     @staticmethod
+    def check_id(line):
+	    args = line.split()
+	    if len(args) < 2:
+		    print("** instance id missing **")
+		    return False
+	    instance_key = "{}.{}".format(args[0], args[1])
+	    instances = models.storage.all()
+	    if instance_key not in instances.keys():
+		    print("** no instance found **")
+		    return False 
+	    return True
+
+    @staticmethod
     def check_class(line):
         """Checks if a class was passed"""
         if line is None or len(line) <= 0:
@@ -93,6 +106,5 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return False
         return True
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
