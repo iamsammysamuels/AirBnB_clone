@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-Created by Samuel Ezeh
+Created by:
+    Samuel Ezeh
+    Mercy Korir
 2022-10-26
 """
 
