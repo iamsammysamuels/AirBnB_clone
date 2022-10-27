@@ -11,8 +11,9 @@ from models.base_model import BaseModel
 from models.place import Place
 from models.review import Review
 from models.user import User
-import models
 import cmd
+import models
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -42,6 +43,34 @@ class HBNBCommand(cmd.Cmd):
             if isinstance(new_instance, BaseModel):
                 new_instance.save()
             print(new_instance.id)
+    
+    def do_destroy(self, line):
+	    """Delete command deletes an instance based on the class name and id"""
+	    if HBNBCommand.check_class(line):
+		    if HBNBCommand.check_id(line):
+			    args = line.split()
+			    instance_keys = "{}.{}".format(args[0], args[1])
+			    objects = models.storage.all()
+			    if instance_keys in objects.keys():
+				    print("Found", instance_keys)
+				    del objects[instance_keys]
+				    print("Successfully deleted")
+				    models.storage.save()
+
+    def do_all(self, line):
+	    """All command to print all string representation of all instances"""
+	    args = line.split()
+	    list_objs = []
+	    objects = models.storage.all()
+	    if len(args) <= 0:
+		    for values in objects.values():
+			    list_objs.append(str(values))
+	    elif len(args) >= 1 and HBNBCommand.check_class(line):
+		    for keys, values in objects.items():
+			    if args[0] in keys:
+				    list_objs.append(str(values))
+	    if len(list_objs) > 0:
+		    print(list_objs)
 
     def do_show(self, line):
         """Print id with respective class"""
@@ -98,13 +127,14 @@ class HBNBCommand(cmd.Cmd):
 
     @staticmethod
     def check_class(line):
-        """Checks if a class was passed"""
-        if line is None or len(line) <= 0:
-            print("** class name missing **")
-            return False
-        elif line[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return False
-        return True
+	    """Checks if a class was passed"""
+	    args = line.split()
+	    if len(args) <= 0:
+		    print("** class name missing **")
+		    return False
+	    elif args[0] not in HBNBCommand.classes:
+		    print("** class doesn't exist **")
+		    return False
+	    return True
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
