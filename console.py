@@ -114,6 +114,7 @@ class HBNBCommand(cmd.Cmd):
 
     @staticmethod
     def check_id(line):
+	    """Verifies the instance id entered"""
 	    args = line.split()
 	    if len(args) < 2:
 		    print("** instance id missing **")
