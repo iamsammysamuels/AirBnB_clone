@@ -7,13 +7,16 @@ Created by:
 """
 
 
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
 from models.place import Place
 from models.review import Review
+from models.state import State
+from models import storage
 from models.user import User
 import cmd
 import models
-from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -21,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb)"
     intro = "*** Welcome to Airbnb console clone ***"
-    classes = ["BaseModel", "User", "Place", "Review"]
+    classes = ["BaseModel", "User", "Place", "Review", "State", "City", "Amenity", "Place"]
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -37,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """Create command to create new instance"""
         args = line.split()
-        status = self.check_class(args)
+        status = self.check_class(line)
         if status == True:
             new_instance = eval(args[0] + "()")
             if isinstance(new_instance, BaseModel):
