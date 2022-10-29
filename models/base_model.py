@@ -19,7 +19,9 @@ class BaseModel:
         """Instantiates the objects
 
         Args:
-        """
+            args (list): list of attributes
+            kwargs (dict): dictionary of attributes
+    """
         if kwargs is not None and len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
