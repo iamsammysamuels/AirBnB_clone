@@ -78,6 +78,5 @@ class TestBaseModel(unittest.TestCase):
         """Tests the to_dict method"""
 
 
-
 if __name__ == "__main__":
     unittest.main()
