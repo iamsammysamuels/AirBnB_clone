@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 """
-BaseModel module
-Created by Samuel Ezeh on the 25th of oct 2022
+BaseModel module.
+Created by:
+	Samuel Ezeh
+	Mercy Korir
+25th of oct 2022
 """
 
 from datetime import datetime
