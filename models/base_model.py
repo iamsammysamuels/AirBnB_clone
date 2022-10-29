@@ -13,10 +13,10 @@ import uuid
 
 
 class BaseModel:
-    """ Defines all common attributes/methods for other classes
+    """Defines all common attributes/methods for other classes
     """
     def __init__(self, *args, **kwargs):
-        """ Instantiates the objects
+        """Instantiates the objects
 
         Args:
         """
@@ -34,19 +34,19 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """ Returns the str output of an instance """
+        """Returns the str output of an instance """
 
         string = "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)  # noqa
         return string
 
     def save(self):
-        """ Updates updated_at with the current datetime """
+        """Updates updated_at with the current datetime """
 
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """ Returns a dictionary of the instance
+        """Returns a dictionary of the instance
 
         Returns:
             A dictionary
