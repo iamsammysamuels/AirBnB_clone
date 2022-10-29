@@ -5,7 +5,7 @@
 from models.base_model import BaseModel
 import pep8
 import unittest
-from models import base_model
+from datetime import datetime
 
 
 class TestBaseModel(unittest.TestCase):
@@ -57,7 +57,7 @@ class TestBaseModel(unittest.TestCase):
         status = type(self.obj)
         self.assertTrue(status is BaseModel)
 
-    def test_that_id_is_uniq(self):
+    def test_that_id_is_unique(self):
         """Tests that each instance has a unique id"""
         obj_1 = BaseModel()
         obj_2 = BaseModel()
@@ -76,6 +76,28 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict(self):
         """Tests the to_dict method"""
+        obj_created_at = self.obj.created_at.isoformat()
+        obj_dict = self.obj.to_dict()
+        self.assertEqual(obj_dict["created_at"], obj_created_at)
+        self.assertTrue(type(obj_dict["created_at"]) is str)
+        self.assertTrue("__class__" in obj_dict.keys())
+        self.assertEqual(obj_dict["__class__"], self.obj.__class__.__name__)
+
+    def test_from_dict(self):
+        """tests initialisation of instance with dict"""
+        obj_dict = self.obj.to_dict()
+        new_obj = BaseModel(**obj_dict)
+        self.assertEqual(new_obj.created_at, self.obj.created_at)
+        self.assertEqual(new_obj.updated_at, self.obj.updated_at)
+        self.assertEqual(new_obj.id, self.obj.id)
+        self.assertIsInstance(new_obj.created_at, datetime)
+
+    def test_update(self):
+        """Tests that instances are updated correctly"""
+        update_1 = self.obj.updated_at
+        self.obj.save()
+        update_2 = self.obj.updated_at
+        self.assertNotEqual(update_1, update_2)
 
 
 if __name__ == "__main__":
