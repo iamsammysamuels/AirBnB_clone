@@ -6,9 +6,9 @@ from models.base_model import BaseModel
 
 
 class State(BaseModel):
-	"""A class state that inherits from BaseModel class
+    """A class state that inherits from BaseModel class
 
-	Attributes:
-		name (str, public): A class attribute name
-	"""
-	name = ""
+    Attributes:
+        name (str, public): A class attribute name
+    """
+    name = ""

@@ -55,9 +55,7 @@ class HBNBCommand(cmd.Cmd):
                 instance_keys = "{}.{}".format(args[0], args[1])
                 objects = models.storage.all()
                 if instance_keys in objects.keys():
-                    print("Found", instance_keys)
                     del objects[instance_keys]
-                    print("Successfully deleted")
                     models.storage.save()
 
     def do_all(self, line):
