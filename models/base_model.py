@@ -36,13 +36,13 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """Returns the str output of an instance """
+        """Returns the str output of an instance"""
 
         string = "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)  # noqa
         return string
 
     def save(self):
-        """Updates updated_at with the current datetime """
+        """Updates updated_at with the current datetime"""
 
         self.updated_at = datetime.now()
         models.storage.save()

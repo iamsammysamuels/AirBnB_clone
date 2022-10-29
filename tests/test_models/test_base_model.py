@@ -37,11 +37,12 @@ class TestBaseModel(unittest.TestCase):
 
     def test_docstring_for_functions(self):
         """Tests that instance methods have docstrings"""
-        docstring = self.obj.__str__().__doc__
+        docstring = self.obj.__str__.__doc__
         self.assertTrue(len(docstring) >= 1)
-        docstring = self.obj.to_dict().__doc__
+        docstring = self.obj.to_dict.__doc__
         self.assertTrue(len(docstring) >= 1)
-        docstring = self.obj.save().__doc__
+        docstring = self.obj.save.__doc__
+        self.assertTrue(len(docstring) >= 1)
 
     def test_instance_attributes(self):
         """Test that instances are assigned attributes"""
@@ -55,6 +56,27 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.obj, BaseModel)
         status = type(self.obj)
         self.assertTrue(status is BaseModel)
+
+    def test_that_id_is_uniq(self):
+        """Tests that each instance has a unique id"""
+        obj_1 = BaseModel()
+        obj_2 = BaseModel()
+        self.assertNotEqual(obj_1.id, self.obj.id)
+        self.assertNotEqual(obj_2.id, self.obj.id)
+        self.assertNotEqual(obj_1.id, obj_2.id)
+
+    def test_str(self):
+        """Tests the __str__ function"""
+        test_string = "[{}] ({}) {}".format(self.obj.__class__.__name__, self.obj.id, self.obj.__dict__)  # noqa
+        i_string = str(self.obj)
+        self.assertEqual(test_string, i_string)
+        self.assertTrue("created_at" in i_string)
+        self.assertTrue("updated_at" in i_string)
+        self.assertTrue("datetime" in i_string)
+
+    def test_to_dict(self):
+        """Tests the to_dict method"""
+
 
 
 if __name__ == "__main__":
