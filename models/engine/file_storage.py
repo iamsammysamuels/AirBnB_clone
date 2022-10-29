@@ -68,5 +68,5 @@ class FileStorage:
             for key, value in new_dict.items():
                 new_instance = BaseModel(**value)
                 self.new(new_instance)
-        except exception:
+        except Exception as e:
             pass

@@ -50,7 +50,11 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(self.obj.first_name, "Samuel")
         self.assertEqual(self.obj.second_name, "Korir")
 
-    def test
+    def test_instance_types(self):
+        """Tests that instances are objects of the class"""
+        self.assertIsInstance(self.obj, BaseModel)
+        status = type(self.obj)
+        self.assertTrue(status is BaseModel)
 
 
 if __name__ == "__main__":
