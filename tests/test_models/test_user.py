@@ -33,3 +33,5 @@ class TestUser(unittest.TestCase):
         result = pep8style.check_files(["tests/test_models/test_user.py"])
         pep8_result = result.total_errors
         self.assertEqual(pep8_result, 0, "Found code style errors (and warnings).")  # noqa
+
+    def test_
