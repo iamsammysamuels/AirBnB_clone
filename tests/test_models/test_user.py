@@ -25,7 +25,7 @@ class TestUser(unittest.TestCase):
         """tests that user module is pep8styled"""
 
         pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(["models/user"])
+        result = pep8style.check_files(["models/user.py"])
         pep8_result = result.total_errors
         self.assertEqual(pep8_result, 0, "Found code style errors (and warnings).")  # noqa
 
@@ -34,8 +34,8 @@ class TestUser(unittest.TestCase):
 
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(["tests/test_models/test_user.py"])
-        pep8_result = result.total_errors
-        self.assertEqual(pep8_result, 0, "Found code style errors (and warnings).")  # noqa
+        pep8_results = result.total_errors
+        self.assertEqual(pep8_results, 0, "Found code style errors (and warnings).")  # noqa
 
     def test_type(self):
         """type checks for user model
