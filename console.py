@@ -113,6 +113,56 @@ class HBNBCommand(cmd.Cmd):
                 storage.all()["{}.{}".format(args[0], args[1])].__dict__[args[2]] = args[3]  # noqa
         storage.save()
 
+    def default(self, args):
+        """Default method that is called when the inputted command starts
+        with a class name.
+        Attributes:
+            args (str): The inputted line string
+        """
+        line = args.strip('()').split(".")
+        if len(line) < 2:
+            print('** missing attribute **')
+            return
+        objects = models.storage.all()
+        class_name = line[0].capitalize()
+        cmd_name = line[1].lower()
+        split2 = cmd_name.strip(')').split('(')
+        cmd_name = split2[0]
+        if cmd_name == 'all':
+            HBNBCommand.do_all(self, class_name)
+        elif cmd_name == 'count':
+            count = 0
+            for k in objects.keys():
+                key = k.split('.')
+                if class_name == key[0]:
+                    count += 1
+            print(count)
+        elif cmd_name == 'show':
+            if len(split2) < 2:
+                print('** no instance found **')
+            else:
+                HBNBCommand.do_show(self, class_name + ' ' + split2[1])
+        elif cmd_name == 'destroy':
+            if len(split2) < 2:
+                print('** no instance found **')
+            else:
+                HBNBCommand.do_destroy(self, class_name + ' ' + split2[1])
+        elif cmd_name == 'update':
+            split3 = split2[1].split(', ')
+            if len(split3) == 0:
+                print('** no instance found **')
+            elif len(split3) == 1 and type(split3[1]) == dict:
+                for k, v in split[1].items():
+                    HBNBCommand.do_update(self, class_name + ' ' + split3[0] +
+                                          ' ' + k + ' ' + v)
+            elif len(split3) == 1 and type(split3[1]) != dict:
+                print('** no instance found **')
+            elif len(split3) == 2:
+                print('** no instance found **')
+            else:
+                HBNBCommand.do_update(self, class_name + ' ' + split3[0] +
+                                      ' ' + split3[1] + ' ' + split3[2])
+
     @staticmethod
     def check_id(line):
         """Verifies the instance id entered"""
